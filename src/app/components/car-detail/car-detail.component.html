@@ -1,0 +1,42 @@
+<!-- <div   >
+    <div  class="card" style="width: 18rem;">
+      <img src="{{carImages[0].imagePath}}" class="card-img-top" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{carDetails.carName}}</h5>
+        <p class="card-text"><b>Model Year : </b>{{carDetails.modelYear}}</p>
+        <p class="card-text"><b>Daily Price : </b>{{ carDetails.dailyPrice | currency }}</p>
+        <p class="card-text"><b>Details : </b>{{carDetails.description}}</p>
+        <a href=" " class="btn btn-primary">Go Back</a>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="card" *ngFor="let car of cars">
+    <h3 class="card-header" style="text-align: center;">{{carDetails.carName}}</h3>
+</div>
+<div *ngFor="let image of carImages" >
+    <img src="{{image.imagePath}}"  class="card-img-top" alt="Card image cap">
+</div>
+<div class="card">
+    <h3 class="card-header" style="text-align: center;">Detaylar</h3>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="card-title" style="text-align: center;">Model Yılı</h4>
+                <p class="card-text" style="text-align: center;">{{carDetails.modelYear}}</p>
+                <h4 class="card-text"  style="text-align: center;" >{{carDetails.description}}</h4>
+            </div>
+            <div class="col-sm-6">
+                <h4 class="card-title " style="text-align: center;">Günlük Fiyat</h4>
+                <p class="card-text"  style="text-align: center;" >{{carDetails.dailyPrice | currency:"₺"}} </p>
+            </div>
+        </div>
+    </div>  
+    <a href=" " class="btn btn-primary">Go Back</a>
+</div>
+
+<div class="d-grid gap-2">
+    <button class="btn btn-dark" type="button">Aracı Kirala</button>
+</div>
+  
+  

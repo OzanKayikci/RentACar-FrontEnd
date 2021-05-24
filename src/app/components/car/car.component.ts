@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Car } from 'src/app/models/car';
-import { CarResponseModel } from 'src/app/models/carResponseModel';
+import { CarImage } from 'src/app/models/carImage';
+import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-car',
@@ -10,17 +13,77 @@ import { CarService } from 'src/app/services/car.service';
 })
 export class CarComponent implements OnInit {
   cars: Car[] = [];
+  carImages:CarImage[]=[];
+  currentCar:Car;
+  currentImage:CarImage;
+  imageRoot = environment.apiUrl+ 'carimages'+"/getimagesbycarid?id=";
+  
   dataLoaded = false;
-  constructor(private carService:CarService) {}
+  constructor(private carService:CarService, private carImageService:CarImageService, private activatedRoute:ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getCars();
+    this.activatedRoute.params.subscribe(params=>{
+      if (params["brandId"]) {
+      this.getCarsByBrand(params["brandId"])
+    }else{
+      this.getCars();
+    }
+  })
+ 
+    
   }
 
   getCars() {
    this.carService.getCars().subscribe(response=>{
-     this.cars=response.data;
+     if (response.data[0]) {
+      this.cars=response.data;
+     }
      this.dataLoaded=true;
+     console.log(this.cars[0])
    });
   }
+
+  getCarsByBrand(brandId:number) {
+    this.carService.getCarsByBrand(brandId).subscribe(response=>{
+      this.cars=response.data;
+      this.dataLoaded=true;
+    });
+   }
+
+   
+   getImagesByCarId(cars :Car[]){
+     cars.forEach(car => {
+      this.carImageService.getCarImages(car.carID).subscribe((response)=>{
+        car.imagePath =response.data[0].imagePath;
+        return car.imagePath;
+      });
+     });
+    
+  }
+
+setCurrentCar(car:Car){
+  this.currentCar=car;
+}
+   setCarDetails(car:Car){
+    // this.dataLoaded=false;
+    this.currentCar=car;
+  }
+  getCurrentCarDetails(car:Car){
+    if(this.currentCar=car)
+    {
+      return "list-group-item ";
+    }
+    return "list-group-item active";
+  }
+
+  // getCarDetails(carImage:CarImage){
+  //   if (this.currentCarImage== carImage.CarId) {
+  //     console.log("asdf" + carImage.CarId)
+  //     return this.carImage.imagePath;
+      
+  //   }
+  //   return null;
+  // }
+ 
+
 }

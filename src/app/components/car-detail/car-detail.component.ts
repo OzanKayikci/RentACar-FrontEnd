@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Car } from 'src/app/models/car';
+import { CarDetailDto } from 'src/app/models/carDetailDto';
 import { CarImage } from 'src/app/models/carImage';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
@@ -14,12 +15,11 @@ import { CarComponent } from '../car/car.component';
 })
 export class CarDetailComponent implements OnInit {
 
-  car:Car[]=[];
-  carImages:CarImage[]=[];
+  carDetails:CarDetailDto;
   currentCarImage:CarImage;
   currentCar:Car;
+  carImages:CarImage[]=[]
   cars:CarComponent["currentCar"];
-  carDetails:Boolean=false;
   imageRoot = environment.apiUrl;
   constructor(
     private carImageService:CarImageService,
@@ -38,28 +38,30 @@ export class CarDetailComponent implements OnInit {
   {
   
   }
-  getCarImages(carID:Number){
+  getCarImages(carID:number){
     this.carImageService.getCarImages(carID).subscribe(response=>{
       this.carImages=response.data
+      console.log("id " +carID +  JSON.stringify(this.carImages[0].imagePath));
     });
-      console.log("id " + carID);
+     
   }
 
   
-  getCarById(carID : Number){
+  getCarById(carID : number){
     this.carService.getCarById(carID).subscribe(response=>{
-      this.car = response.data;
+      this.carDetails= response.data;
+      console.log("asd " + JSON.stringify(response.data.carName));
     });
   }
-  getDetailsByCarId(cars:Car[]){
-    cars.forEach(car => { 
-      this.carService.getCarById(car.carID).subscribe((response)=>{
-        car.carID =response.data[0].carID;
-        console.log(car.carID);
-        return car.carID;
-      });
-    });
+  // getDetailsByCarId(cars:Car[]){
+  //   cars.forEach(car => { 
+  //     this.carService.getCarById(car.carID).subscribe((response)=>{
+  //       car.carID =response.data[0].carID;
+  //       console.log(car.carID);
+  //       return car.carID;
+  //     });
+  //   });
     
-  }
+  // }
 
 }

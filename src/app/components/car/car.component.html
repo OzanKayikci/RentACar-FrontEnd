@@ -1,9 +1,10 @@
 <div *ngIf="dataLoaded == false" class="spinner-border text-info" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-<table *ngIf="dataLoaded == true" class="table">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<!-- <table class="list-group list-group-horizontal-xxl" *ngIf="dataLoaded == true" class="table">
   <thead>
       <tr>
+        <th>Image</th>
         <th>Id</th>
         <th>Name</th>
         <th>Brand</th>
@@ -13,9 +14,10 @@
         <th>Description</th>
       </tr> 
   </thead>
-  <tbody>
-    <tr *ngFor="let car of cars">
-        <td>{{ car.id }}</td>
+  <tbody >
+    <tr (click)="setCarDetails(car)" routerLink= "/carImage/cardetails/{{car.carID}}"*ngFor="let car of cars" >
+      <td><img  src="{{car.imagePath}}" alt="{{car.carName}}"></td>
+        <td>{{ car.carID }}</td>
         <td>{{ car.carName }}</td>
         <td>{{ car.brandName }}</td>
         <td>{{ car.colorName }}</td>
@@ -25,4 +27,28 @@
       </tr>
   </tbody>
   
-</table>
+</table> -->
+
+<div *ngIf="dataLoaded == true" class="">
+  <div class="row col-md-12">
+    <div  *ngFor="let car of cars" class="col-md-4 mb-4">
+      <div  class="card">
+        <img
+          src="{{car.imagePath}}"
+          class="card-img-top myimg"
+          alt="{{ car.description }}"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{ car.carName }}</h4>
+          <p class="card-text"><b>Marka:</b> {{ car.brandName }}</p>
+          <p class="card-text"><b>Renk:</b> {{ car.colorName }}</p>
+          <p class="card-text"><b>Açıklama:</b> {{ car.description }}</p>
+          <p class="card-text">
+            <b>Günlük Fiyat:</b> {{ car.dailyPrice | currency:"₺" }} <br />
+          </p>
+          <button routerLink= "/carImage/cardetails/{{car.carID}}" (click)="setCarDetails(car)" class="btn btn-success float-end ms-2">Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

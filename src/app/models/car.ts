@@ -1,7 +1,6 @@
-import { Brand } from "./brand";
 
 export interface Car{
-    id:number;
+    carID:number;
     brandId:number;
     colorId:number;
     carName:string;
@@ -9,6 +8,7 @@ export interface Car{
     ColorName:string;
     modelYear: number;
     dailyPrice:number;
+    imagePath:string;
     description:string;
 }
 
