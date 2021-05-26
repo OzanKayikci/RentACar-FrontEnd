@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Car } from 'src/app/models/car';
 import { CarDetailDto } from 'src/app/models/carDetailDto';
 import { CarImage } from 'src/app/models/carImage';
+import { CartItems } from 'src/app/models/cartItems';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
+import { CartService } from 'src/app/services/cart.service';
 import { environment } from 'src/environments/environment';
 import { CarComponent } from '../car/car.component';
 
@@ -24,7 +27,10 @@ export class CarDetailComponent implements OnInit {
   constructor(
     private carImageService:CarImageService,
      private carService : CarService, 
-     private activatedRoute:ActivatedRoute) { }
+     private activatedRoute:ActivatedRoute,
+     private toastrService:ToastrService,
+     private cartService:CartService
+     ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params)=>{
@@ -53,15 +59,8 @@ export class CarDetailComponent implements OnInit {
       console.log("asd " + JSON.stringify(response.data.carName));
     });
   }
-  // getDetailsByCarId(cars:Car[]){
-  //   cars.forEach(car => { 
-  //     this.carService.getCarById(car.carID).subscribe((response)=>{
-  //       car.carID =response.data[0].carID;
-  //       console.log(car.carID);
-  //       return car.carID;
-  //     });
-  //   });
-    
-  // }
+  addToCart(car: Car) {
+   this.cartService.addToCart(car);
+  }
 
 }

@@ -29,9 +29,17 @@
   
 </table> -->
 
+<div class="mb-3">
+  <label for="filterText" class="form-label">Ürün Ara</label>
+  <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="ürün adı">
+</div>
+<div *ngIf="filterText" class="alert alert-success">
+{{filterText}} aradınız
+</div>
+
 <div *ngIf="dataLoaded == true" class="">
   <div class="row col-md-12">
-    <div  *ngFor="let car of cars" class="col-md-4 mb-4">
+    <div  *ngFor="let car of cars | filterPipe:filterText" class="col-md-4 mb-4">
       <div  class="card">
         <img
           src="{{car.imagePath}}"
@@ -40,14 +48,13 @@
         />
         <div class="card-body">
           <h4 class="card-title">{{ car.carName }}</h4>
-          <p class="card-text"><b>Marka:</b> {{ car.brandName }}</p>
+          <p class="card-text"><b>Marka:</b> {{ car.brandName |uppercase }}</p>
           <p class="card-text"><b>Renk:</b> {{ car.colorName }}</p>
           <p class="card-text"><b>Açıklama:</b> {{ car.description }}</p>
-          <p class="card-text">
-            <b>Günlük Fiyat:</b> {{ car.dailyPrice | currency:"₺" }} <br />
-          </p>
-          <button routerLink= "/carImage/cardetails/{{car.carID}}" (click)="setCarDetails(car)" class="btn btn-success float-end ms-2">Details</button>
-        </div>
+          <p class="card-text"><b>Günlük Fiyat:</b> {{ car.dailyPrice | currency:"₺" }} <br /></p>
+          <p class="card-text"><b>KDV'li Fiyat:</b> {{ car.dailyPrice | vatAdded:10 | currency:"₺" }}</p>
+
+          <button routerLink= "/carImage/cardetails/{{car.carID}}" (click)="setCarDetails(car)" class="btn btn-warning float-end ms-2">Details</button>        </div>
       </div>
     </div>
   </div>

@@ -10,33 +10,95 @@
       </div>
     </div>
   </div> -->
+<div class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li
+      data-target="#carouselExampleIndicators"
+      data-slide-to="0"
+      class="active"
+    ></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div
+    *ngFor="let image of carImages"
+    id="carouselExampleIndıcators "
+    class="carousel-inner"
+  >
+    <div class="carousel-item active">
+      <img
+        src="{{ image.imagePath }}"
+        class="d-block w-100"
+        alt="First slide"
+      />
+    </div>
+    <div class="carousel-item active">
+      <img
+        src="{{ image.imagePath }}"
+        class="d-block w-100"
+        alt="First slide"
+      />
+    </div>
+    <div class="carousel-item active">
+      <img
+        src="{{ image.imagePath }}"
+        class="d-block w-100"
+        alt="First slide"
+      />
+    </div>
+  </div>
+  <a
+    class="carousel-control-prev"
+    href="#carouselExampleIndicators"
+    role="button"
+    data-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a
+    class="carousel-control-next"
+    href="#carouselExampleIndicators"
+    role="button"
+    data-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
-  <div class="card" *ngFor="let car of cars">
-    <h3 class="card-header" style="text-align: center;">{{carDetails.carName}}</h3>
-</div>
-<div *ngFor="let image of carImages" >
-    <img src="{{image.imagePath}}"  class="card-img-top" alt="Card image cap">
-</div>
+
 <div class="card">
-    <h3 class="card-header" style="text-align: center;">Detaylar</h3>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <h4 class="card-title" style="text-align: center;">Model Yılı</h4>
-                <p class="card-text" style="text-align: center;">{{carDetails.modelYear}}</p>
-                <h4 class="card-text"  style="text-align: center;" >{{carDetails.description}}</h4>
-            </div>
-            <div class="col-sm-6">
-                <h4 class="card-title " style="text-align: center;">Günlük Fiyat</h4>
-                <p class="card-text"  style="text-align: center;" >{{carDetails.dailyPrice | currency:"₺"}} </p>
-            </div>
-        </div>
-    </div>  
-    <a href=" " class="btn btn-primary">Go Back</a>
+  <h3 class="card-header" style="text-align: center">{{ carDetails.carName }}</h3>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="card-title" style="text-align: center">Model Yılı</h4>
+        <p class="card-text" style="text-align: center">
+          {{ carDetails.modelYear }}
+        </p>
+        <h4 class="card-text" style="text-align: center">
+          {{ carDetails.description }}
+        </h4>
+      </div>
+      <div class="col-sm-6">
+        <h4 class="card-title" style="text-align: center">Günlük Fiyat</h4>
+        <p class="card-text" style="text-align: center">
+          {{ carDetails.dailyPrice | currency: "₺" }}
+        </p>
+        <p class="card-text">
+          <b>KDV'li Fiyat:</b>
+          {{ carDetails.dailyPrice | vatAdded: 10 | currency: "₺" }}
+        </p>
+      </div>
+    </div>
+    <div>
+        <a href=" " class="btn btn-primary float-end ms-2">Go Back</a>
+    </div>
+  </div>
 </div>
-
-<div class="d-grid gap-2">
-    <button class="btn btn-dark" type="button">Aracı Kirala</button>
+<div class="float-xl-end">
+  <button type="button" (click)="addToCart(carDetails)" class="btn btn-success">
+    Aracı Kirala
+  </button>
 </div>
-  
-  
